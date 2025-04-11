@@ -6,13 +6,39 @@ public class MatchstickGame {
 
     public MatchstickGame(int initialMatchsticks) {
         this.matchsticks = initialMatchsticks;
+
+        // GAME LOOP WHOOM
+        while (true) {
+            playerTurn();
+            if (matchsticks == 0) {
+                showMessage("Computer won!!");
+                break;
+            }
+
+            computerTurn();
+            if(matchsticks <= 0) {
+                showMessage("You won!");
+                break;
+            }
+        }
     }
 
     private void playerTurn() {
-
+        int taken = readValidInput("YOUR TURN : How many matchsticks do you want to take? (1-3) (Theres " + matchsticks + " left)");
+        if (taken > matchsticks) {
+            showMessage("You can't take more than what's left");
+            playerTurn();
+        } else {
+            matchsticks -= taken;
+            showMessage("You took " + taken + " matchsticks. You have " + matchsticks + " left");
+        }
     }
 
     private void computerTurn () {
+        int taken = calculateComputerMove();
+        matchsticks -= taken;
+        showMessage("Computer takes " + taken + " matchsticks. You have " + matchsticks + " left");
+
 
     }
 
@@ -27,7 +53,14 @@ public class MatchstickGame {
             String input = JOptionPane.showInputDialog(null, message);
             if (input == null) {
                 showMessage("You cancelled the input, Try again :)");
+                showMessage("You cant leave the game like this");
+                showMessage("We aint raising a quitter here");
+                showMessage("You aint ever gonna get outta here AHAHHA");
+                showMessage(" AHAAAAAAAAAAAAAAAAAAAAAAAAAHAHHAAH");
                 continue;
+
+                /*showMessage("Game cancelled, goodbye get cancerd");
+                System.exit(0);*/
             }
             try {
                 int value = Integer.parseInt(input);
